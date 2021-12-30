@@ -1,0 +1,387 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Decision Tree with R},
+  pdfauthor={Azeez Olalekan, Baki},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Decision Tree with R}
+\author{Azeez Olalekan, Baki}
+\date{28/12/2021}
+
+\begin{document}
+\maketitle
+
+\hypertarget{the-data-cardiotocographic}{%
+\subsection{The Data:
+Cardiotocographic}\label{the-data-cardiotocographic}}
+
+The data is a medical data compiled by cardiologists on patients to
+determine the heart disease. Target variable from the data is NSP. NSP
+is coded: 1- Normal patient 2- Suspect 3- Pathology.
+
+There are total of 22 variables in the data with 2127 rows i.e.~the
+number of patients sampled.
+
+\hypertarget{objective-of-the-analysis}{%
+\section{Objective of the Analysis}\label{objective-of-the-analysis}}
+
+The objective is to build a Decision Tree to predict the heart disease
+of the a patient with the variable highlighted.
+
+\hypertarget{the-step}{%
+\section{The Step:}\label{the-step}}
+
+To start our Analysis, let load the data and do some exploratory
+analysis on it.
+
+Let get started!
+
+Note, the target variable NSP is an integer but it should be factor. So,
+let create another column in our dataset convert it to factor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{heart}\SpecialCharTok{$}\NormalTok{NSP\_factor }\OtherTok{=} \FunctionTok{as.factor}\NormalTok{(heart}\SpecialCharTok{$}\NormalTok{NSP)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we have converted our target variable to character showing
+1:normal, 2:suspect and 3:pathology.
+
+\hypertarget{exploration-of-the-data}{%
+\subsection{Exploration of the Data}\label{exploration-of-the-data}}
+
+Let start with the summary statistics of the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(heart[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{21}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        LB              AC                 FM                 UC          
+##  Min.   :106.0   Min.   :0.000000   Min.   :0.000000   Min.   :0.000000  
+##  1st Qu.:126.0   1st Qu.:0.000000   1st Qu.:0.000000   1st Qu.:0.001876  
+##  Median :133.0   Median :0.001630   Median :0.000000   Median :0.004482  
+##  Mean   :133.3   Mean   :0.003170   Mean   :0.009474   Mean   :0.004357  
+##  3rd Qu.:140.0   3rd Qu.:0.005631   3rd Qu.:0.002512   3rd Qu.:0.006525  
+##  Max.   :160.0   Max.   :0.019284   Max.   :0.480634   Max.   :0.014925  
+##        DL                 DS                  DP                 ASTV      
+##  Min.   :0.000000   Min.   :0.000e+00   Min.   :0.0000000   Min.   :12.00  
+##  1st Qu.:0.000000   1st Qu.:0.000e+00   1st Qu.:0.0000000   1st Qu.:32.00  
+##  Median :0.000000   Median :0.000e+00   Median :0.0000000   Median :49.00  
+##  Mean   :0.001885   Mean   :3.585e-06   Mean   :0.0001566   Mean   :46.99  
+##  3rd Qu.:0.003264   3rd Qu.:0.000e+00   3rd Qu.:0.0000000   3rd Qu.:61.00  
+##  Max.   :0.015385   Max.   :1.353e-03   Max.   :0.0053476   Max.   :87.00  
+##       MSTV            ALTV             MLTV            Width       
+##  Min.   :0.200   Min.   : 0.000   Min.   : 0.000   Min.   :  3.00  
+##  1st Qu.:0.700   1st Qu.: 0.000   1st Qu.: 4.600   1st Qu.: 37.00  
+##  Median :1.200   Median : 0.000   Median : 7.400   Median : 67.50  
+##  Mean   :1.333   Mean   : 9.847   Mean   : 8.188   Mean   : 70.45  
+##  3rd Qu.:1.700   3rd Qu.:11.000   3rd Qu.:10.800   3rd Qu.:100.00  
+##  Max.   :7.000   Max.   :91.000   Max.   :50.700   Max.   :180.00  
+##       Min              Max           Nmax            Nzeros       
+##  Min.   : 50.00   Min.   :122   Min.   : 0.000   Min.   : 0.0000  
+##  1st Qu.: 67.00   1st Qu.:152   1st Qu.: 2.000   1st Qu.: 0.0000  
+##  Median : 93.00   Median :162   Median : 3.000   Median : 0.0000  
+##  Mean   : 93.58   Mean   :164   Mean   : 4.068   Mean   : 0.3236  
+##  3rd Qu.:120.00   3rd Qu.:174   3rd Qu.: 6.000   3rd Qu.: 0.0000  
+##  Max.   :159.00   Max.   :238   Max.   :18.000   Max.   :10.0000  
+##       Mode            Mean           Median         Variance     
+##  Min.   : 60.0   Min.   : 73.0   Min.   : 77.0   Min.   :  0.00  
+##  1st Qu.:129.0   1st Qu.:125.0   1st Qu.:129.0   1st Qu.:  2.00  
+##  Median :139.0   Median :136.0   Median :139.0   Median :  7.00  
+##  Mean   :137.5   Mean   :134.6   Mean   :138.1   Mean   : 18.81  
+##  3rd Qu.:148.0   3rd Qu.:145.0   3rd Qu.:148.0   3rd Qu.: 24.00  
+##  Max.   :187.0   Max.   :182.0   Max.   :186.0   Max.   :269.00  
+##     Tendency      
+##  Min.   :-1.0000  
+##  1st Qu.: 0.0000  
+##  Median : 0.0000  
+##  Mean   : 0.3203  
+##  3rd Qu.: 1.0000  
+##  Max.   : 1.0000
+\end{verbatim}
+
+The summary results show the mean of each variable, the minimum value of
+the variable, the maximum the first and the third quartile as well as
+median, i.e.~the second quartile. From here, we know the mean value of
+the variables.
+
+let plot the statistics of the result using boxplot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{boxplot}\NormalTok{(heart[,}\DecValTok{8}\SpecialCharTok{:}\DecValTok{15}\NormalTok{], }\AttributeTok{ylab =} \StringTok{"distribution"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"parameters"}\NormalTok{, }\AttributeTok{main=} \StringTok{"Boxplot of some variables"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Decision-Trees-with-R_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\hypertarget{decision-tree}{%
+\subsection{Decision Tree}\label{decision-tree}}
+
+For the Decision Tree we will be using the package party. Let start by
+installing and calling the library. Before that let split the data into
+test and train(validate)data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\NormalTok{heart1 }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}\DecValTok{2}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.9}\NormalTok{, }\FloatTok{0.1}\NormalTok{), }\FunctionTok{nrow}\NormalTok{(heart))}
+\NormalTok{htrain }\OtherTok{\textless{}{-}}\NormalTok{ heart[heart1}\SpecialCharTok{==}\DecValTok{1}\NormalTok{,]}
+\NormalTok{htest }\OtherTok{\textless{}{-}}\NormalTok{ heart[heart1}\SpecialCharTok{==}\DecValTok{2}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+We have divided our data into two sizes, labelled 1 and 2. 1 is train
+data and 2 is validate(test) data. Note, the function set.seed: this is
+done to make sure we get same number for our train and test data. Next
+is to build the decision tree model For the Decision Tree we will be
+using the package party. Let start by installing and calling the
+library.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(}\StringTok{"party"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: grid
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: mvtnorm
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: modeltools
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: stats4
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: strucchange
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: sandwich
+\end{verbatim}
+
+Good!. We have successfully installed the required package. Next is to
+build the decision tree mode
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tree }\OtherTok{\textless{}{-}} \FunctionTok{ctree}\NormalTok{(NSP\_factor}\SpecialCharTok{\textasciitilde{}}\NormalTok{LB}\SpecialCharTok{+}\NormalTok{AC}\SpecialCharTok{+}\NormalTok{FM}\SpecialCharTok{+}\NormalTok{UC}\SpecialCharTok{+}\NormalTok{DL}\SpecialCharTok{+}\NormalTok{DS}\SpecialCharTok{+}\NormalTok{DP}\SpecialCharTok{+}\NormalTok{ASTV}\SpecialCharTok{+}\NormalTok{MSTV}\SpecialCharTok{+}\NormalTok{ALTV}\SpecialCharTok{+}\NormalTok{MLTV}\SpecialCharTok{+}\NormalTok{Width}\SpecialCharTok{+}\NormalTok{Min}\SpecialCharTok{+}\NormalTok{Max}\SpecialCharTok{+}\NormalTok{Nmax}\SpecialCharTok{+}\NormalTok{Nzeros}\SpecialCharTok{+}\NormalTok{Mode}\SpecialCharTok{+}\NormalTok{Mean}\SpecialCharTok{+}\NormalTok{Median}\SpecialCharTok{+}\NormalTok{Variance}\SpecialCharTok{+}\NormalTok{Tendency, }\AttributeTok{data=}\NormalTok{htrain, }\AttributeTok{controls =} \FunctionTok{ctree\_control}\NormalTok{(}\AttributeTok{minsplit =} \DecValTok{1500}\NormalTok{, }\AttributeTok{mincriterion =} \FloatTok{0.99}\NormalTok{))}
+\NormalTok{tree}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##   Conditional inference tree with 4 terminal nodes
+## 
+## Response:  NSP_factor 
+## Inputs:  LB, AC, FM, UC, DL, DS, DP, ASTV, MSTV, ALTV, MLTV, Width, Min, Max, Nmax, Nzeros, Mode, Mean, Median, Variance, Tendency 
+## Number of observations:  1908 
+## 
+## 1) DP <= 0.001422475; criterion = 1, statistic = 637.355
+##   2) ALTV <= 68; criterion = 1, statistic = 666.13
+##     3) ALTV <= 13; criterion = 1, statistic = 537.628
+##       4)*  weights = 1394 
+##     3) ALTV > 13
+##       5)*  weights = 368 
+##   2) ALTV > 68
+##     6)*  weights = 44 
+## 1) DP > 0.001422475
+##   7)*  weights = 102
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Decision-Trees-with-R_files/figure-latex/unnamed-chunk-6-1.pdf}
+\#\# Interpretation of the Decision tree The result of the tree shows
+that if the Dp of the patient is greater than 0.001, the patient is
+likely to have a pathogenic heart problem. But if less than or equal
+0.001, we should check the ALTV, if that \textgreater{} 68, there is
+90\% chance the patient is a pathogenic patient other \textless/= 68 and
+ALTV\textgreater13, 55\% of suspect.
+
+\hypertarget{prediction-of-test-data-from-the-model}{%
+\subsection{Prediction of test data from the
+model}\label{prediction-of-test-data-from-the-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{obs }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(tree, htest)}
+\NormalTok{obs}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [1] 1 3 1 1 2 1 1 3 2 2 1 2 1 1 1 1 2 1 1 1 1 1 1 2 2 1 1 1 2 2 2 2 2 2 1 3 2
+##  [38] 2 2 2 2 2 1 1 2 1 2 1 1 2 1 1 2 2 2 1 1 1 1 2 1 2 2 1 1 1 1 1 1 1 1 1 1 1
+##  [75] 1 3 1 1 1 1 1 1 2 1 1 1 1 1 1 2 2 2 2 1 1 1 1 1 1 2 2 2 2 2 2 1 1 1 3 1 1
+## [112] 2 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 1 2 1 1 2 1 3
+## [149] 1 3 1 1 1 1 2 2 1 1 1 1 1 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3
+## [186] 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 1 1 1 1 1 1 1 1 1 2 2 1 3 2 1 1 2
+## Levels: 1 2 3
+\end{verbatim}
+
+\hypertarget{interpretation}{%
+\section{Interpretation}\label{interpretation}}
+
+From the obs result, the model predict the outcome of the test data. It
+was observed that for the first patient, s/he is a normal patient,
+patient 2 is pathogenic heart problem, patient 34, is suspect\ldots{} if
+we have new dataset, we can easily predict the outcome of the patient
+given all the predictors. we can do that using ``predict(tree,
+newdata)''.
+
+\hypertarget{accuracy-of-the-model}{%
+\subsection{Accuracy of the model}\label{accuracy-of-the-model}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{acc }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(}\FunctionTok{predict}\NormalTok{(tree), htrain}\SpecialCharTok{$}\NormalTok{NSP\_factor)}
+\FunctionTok{print}\NormalTok{(acc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    
+##        1    2    3
+##   1 1297   69   28
+##   2  171  182   15
+##   3   16    9  121
+\end{verbatim}
+
+\#\#Interpretation The result of the accuracy shows that out of the
+normal patient sampled, 1297 was predicted correctly, 171 was predicted
+to be suspect while 16 was predicted to be pathogenic. For the suspect,
+69 was predicted to be normal, 182 to be suspect and 9 to be pathogen.
+
+\end{document}

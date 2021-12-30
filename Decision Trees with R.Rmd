@@ -1,0 +1,117 @@
+---
+title: "Decision Tree with R"
+author: "Azeez Olalekan, Baki"
+date: "28/12/2021"
+output:
+  word_document: default
+  pdf_document: default
+---
+## The Data: Cardiotocographic
+The data is a medical data compiled by cardiologists on patients to determine the heart disease. Target variable from the data is NSP. NSP is coded:
+1- Normal patient
+2- Suspect
+3- Pathology.
+
+There are total of 22 variables in the data with 2127 rows i.e. the number of patients sampled.
+
+# Objective of the Analysis
+The objective is to build a Decision Tree to predict the heart disease of the a patient with the variable highlighted.
+
+# The Step:
+To start our Analysis, let load the data and do some exploratory analysis on it.
+
+Let get started!
+```{r setup, include=FALSE}
+library(readr)
+heart <- read_csv("Cardiotocographic.csv")
+head(heart)
+str(heart)
+```
+
+Note, the target variable NSP is an integer but it should be factor. So, let create another column in our dataset convert it to factor.
+```{r}
+heart$NSP_factor = as.factor(heart$NSP)
+```
+
+Now, we have converted our target variable to character showing 
+1:normal, 
+2:suspect and 
+3:pathology.
+
+## Exploration of the Data
+Let start with the summary statistics of the data
+```{r}
+summary(heart[,1:21])
+```
+
+The summary results show the mean of each variable, the minimum value of the variable, the maximum the first and the third quartile as well as median, i.e. the second quartile. From here, we know the mean value of the variables.
+
+let plot the statistics of the result using boxplot. 
+```{r}
+boxplot(heart[,8:15], ylab = "distribution", xlab = "parameters", main= "Boxplot of some variables")
+```
+
+## Decision Tree
+For the Decision Tree we will be using the package party. Let start by installing and calling the library. Before that let split the data into test and train(validate)data.
+```{r}
+set.seed(1234)
+heart1 <- sample(2, replace = TRUE, prob = c(0.9, 0.1), nrow(heart))
+htrain <- heart[heart1==1,]
+htest <- heart[heart1==2,]
+```
+
+We have divided our data into two sizes, labelled 1 and 2. 1 is train data and 2 is validate(test) data. 
+Note, the function set.seed: this is done to make sure we get same number for our train and test data.
+Next is to build the decision tree model
+For the Decision Tree we will be using the package party. Let start by installing and calling the library.
+
+```{r}
+library("party")
+```
+
+Good!. We have successfully installed the required package.
+Next is to build the decision tree mode
+```{r}
+tree <- ctree(NSP_factor~LB+AC+FM+UC+DL+DS+DP+ASTV+MSTV+ALTV+MLTV+Width+Min+Max+Nmax+Nzeros+Mode+Mean+Median+Variance+Tendency, data=htrain, controls = ctree_control(minsplit = 1500, mincriterion = 0.99))
+tree
+plot(tree)
+```
+## Interpretation of the Decision tree
+The result of the tree shows that if the Dp of the patient is greater than 0.001, the patient is likely to have a pathogenic heart problem. But if less than or equal 0.001, we should check the ALTV, if that > 68, there is 90% chance the patient is a pathogenic patient other </= 68 and ALTV>13, 55% of suspect.
+
+## Prediction of test data from the model
+```{r}
+obs <- predict(tree, htest)
+obs
+```
+
+# Interpretation
+From the obs result, the model predict the outcome of the test data. It was observed that for the first patient, s/he is a normal patient, patient 2 is pathogenic heart problem, patient 34, is suspect...
+if we have new dataset, we can easily predict the outcome of the patient given all the predictors. we can do that using 
+"predict(tree, newdata)".
+
+## Accuracy of the model
+```{r}
+acc <- table(predict(tree), htrain$NSP_factor)
+print(acc)
+```
+##Interpretation
+The result of the accuracy shows that out of the normal patient sampled, 1297 was predicted correctly, 171 was predicted to be suspect while 16 was predicted to be pathogenic.
+For the suspect, 69 was predicted to be normal, 182 to be suspect and 9 to be pathogen.
+
+## Random Forest Model
+```{r}
+library(caret)
+trc <- trainControl(method = "repeatedcv", number = 10, repeats = 5)
+model <- train(NSP_factor~LB+AC+FM+UC+DL+DS+DP+ASTV+MSTV+ALTV+MLTV+Width+Min+Max+Nmax+Nzeros+Mode+Mean+Median+Variance+Tendency,data=htrain, method = "rf", trControl = trc)
+obs <- predict(model, htrain)
+obs
+obs1 <- predict(model, htest)
+obs1
+confusionMatrix(obs, htrain$NSP_factor)
+```
+
+```{r}
+#result <- predict(model, data.frame(LB=150, AC=0.003564), interval = "confidence")
+```
+
